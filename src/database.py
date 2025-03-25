@@ -1,14 +1,11 @@
-from sqlalchemy import create_engine, text
+from sqlalchemy import create_engine
+from sqlalchemy.orm import DeclarativeBase
 
-from config import settings
+from src.config import settings
 
 
-engine = create_engine(
-    url=settings.DATABASE_URL_psycopg,
-    echo=False,
-)
+class Base(DeclarativeBase):
+    pass
 
-with engine.connect() as conn:
-    res = conn.execute(text("SELECT VERSION()"))
 
-    print(f"{res.all()=}")
+engine = create_engine(settings.DATABASE_URL_psycopg)
